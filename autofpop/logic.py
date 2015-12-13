@@ -7,11 +7,6 @@ from autofpop import friendspop
 import matplotlib.pyplot as plt
 from pprint import pprint
 
-def screen():
-	sc = ScreenReader.normalizeImage(andlib.GetScreen())
-	# io.imsave("data/history/hist_" + friendspop.getTimeStr() + ".png", sc)
-	return sc
-
 def matrix(sc):
 	mat = ScreenReader.createMatrixFromScreen(sc)
 	pprint(mat)
@@ -39,7 +34,8 @@ def run():
 	andlib.Init()
 	while True:
 		print("#" * 70)
-		sc = screen()
+		sc = andlib.GetScreen()
+		sc = ScreenReader.normalizeImage(sc)
 		mat = matrix(sc)
 		start, end = solve(mat)
 		show(sc, start, end)

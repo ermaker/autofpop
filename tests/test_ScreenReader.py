@@ -1,8 +1,11 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
+from autofpop import logic
+from autofpop import andlib
 from autofpop import ScreenReader
 from autofpop.new_recognizer import Image, ImageReader
+
+import numpy as np
 
 import unittest
 
@@ -17,3 +20,15 @@ class ScreenReaderTest(unittest.TestCase):
 		ScreenReader.predict(image)
 		ScreenReader.predict(image)
 		ScreenReader.predict(image)
+
+	def test_write_and_read(self):
+		fixture = 'tests/fixtures/screen/20151213230031.png'
+		output = 'tmp/screen.png'
+		sc = ScreenReader.read(fixture)
+		ScreenReader.write(sc, output)
+		sc2 = ScreenReader.read(output)
+		self.assertTrue(np.array_equal(sc, sc2))
+
+		n = ScreenReader.normalizeImage(sc)
+		n2 = ScreenReader.normalizeImage(sc2)
+		self.assertTrue(np.array_equal(n, n2))
