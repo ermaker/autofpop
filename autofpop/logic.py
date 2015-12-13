@@ -7,14 +7,17 @@ from autofpop import friendspop
 import matplotlib.pyplot as plt
 from pprint import pprint
 
+def screen():
+	sc = ScreenReader.normalizeImage(andlib.GetScreen())
+	# io.imsave("data/history/hist_" + friendspop.getTimeStr() + ".png", sc)
+	return sc
+
 def run():
 	andlib.Init()
 	while True:
 		print("#" * 70)
 
-		sc = andlib.GetScreen()
-		sc = ScreenReader.normalizeImage(sc)
-		# io.imsave("data/history/hist_" + friendspop.getTimeStr() + ".png", sc)
+		sc = screen()
 		mat = ScreenReader.createMatrixFromScreen(sc)
 		pprint(mat)
 		friendspop.print_board(mat)
