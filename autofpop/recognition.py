@@ -125,7 +125,7 @@ class ImgRecognizer:
 
     def predict_(self, img):
         feat = self.img2feat(img)
-        afterpca = self.pca.transform(feat)
+        afterpca = self.pca.transform(feat.reshape(1, -1))
         result = int(self.clf.predict(afterpca))
         return result
 
