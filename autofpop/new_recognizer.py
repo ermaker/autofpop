@@ -143,7 +143,7 @@ class RecognizerSVM(RecognizerCommon):
 
 	def fit(self):
 		self.model = GridSearchCV(
-			SVC(kernel='rbf', class_weight='auto'),
+			SVC(kernel='rbf', class_weight='balanced'),
 			self.param_grid).fit(self.data.X, self.data.y)
 
 	def predict(self, X):
@@ -186,12 +186,12 @@ class RecognizerPCA(RecognizerCommon):
 	def predict(self, X):
 		return self.model.transform(X)
 
-from sklearn.lda import LDA
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
 class RecognizerLDA(RecognizerCommon):
 	n_components = 30
 	def fit(self):
-		self.model = LDA(
+		self.model = LinearDiscriminantAnalysis(
 			n_components=self.n_components).fit(self.data.X, self.data.y)
 
 	def predict(self, X):
